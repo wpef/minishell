@@ -6,55 +6,64 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/15 19:11:44 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/15 22:13:14 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+//TO DO
+//put print_tab to lib
+//coder getenvpos ==> RENVOIT INDEX DANS char **ENV
+//coder getenv ==> sub from (len de arg + 1), jusqua la fin
+//coder modifenv ==> modif valeur de (getenvpos(arg));
+//montrer le bug a francis
+
+static void ft_print_tab(char **tab) //go to lib
+{
+	int i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		ft_putendl(tab[i]);
+			i++;
+	}
+}
+
+int	main(int ac, char **av, char **environ)
 {
 	char *line;
 	char **cmd;
-	
-	PROMPT;
-	while (ft_gnl(0, &line) == 1)
-	{
-		if (!line[0])
-		{
-			PROMPT;
-			continue;
-		}
-		cmd = msh_splitargs(line);
-		free(line);
-		if (ft_strcmp(cmd[0], "exit") == 0)
-			exit(EXIT_SUCCESS);
-		else if (msh_checkcmd(cmd) == -1)
-		{
-			ft_sdebug("minishell: command not found: %", cmd[0]);
-			exit(EXIT_SUCCESS);
-		}
-	}
-	return (0);
-}
 
-int	msh_checkcmd(char **cmd)
-{
-	//envoyer av[0] dans execv /bin/cmd
-	//SI DIFFERENT DES BUILTIN
-	if (cmd[0])
+	if (ac && av)
 	{
-		if (msh_checkbuilt(cmd) == 0)
-			return(msh_execbin(cmd));
+		PROMPT;
+		line = NULL;
+		while (ft_gnl(0, &line) == 1)
+		{
+			cmd = msh_splitargs(line);
+			if (line[0] && msh_checkbuilt(cmd, environ) == -1)
+			{ //enlever ces crochets pour le pb d'env
+				if (msh_execbin(cmd) == -1)
+				{
+					ft_sdebug("minishell: command not found: %", cmd[0]);
+					exit(EXIT_SUCCESS);
+				}
+			} //idem
+			free(line);
+			PROMPT;
+		}
+		return(0);
 	}
-	return(0);
+	return (-1);
 }
 
 int	msh_execbin(char **cmd)
 {
 	char	*path;
 	pid_t	pid;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -63,13 +72,26 @@ int	msh_execbin(char **cmd)
 	}
 	else
 		wait (&pid);
-	PROMPT;
 	return(1);
 }
 
-int msh_checkbuilt(char **cmd)
+int msh_checkbuilt(char **cmd, char **environ)
 {
-	cmd = NULL;
-	PROMPT;
-	return (1);
+	if (ft_strcmp(cmd[0], "exit") == 0)
+		exit(EXIT_SUCCESS);
+	if (ft_strcmp(cmd[0], "env") == 0)
+	{
+		ft_print_tab(environ);
+		return (0);
+	}
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+	{
+		//msh_changedir();
+		return(0);
+	}
+	else if (ft_strcmp(cmd[0], "setenv") == 0)
+		return(0);
+	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
+		return(0);
+	return (-1);
 }
