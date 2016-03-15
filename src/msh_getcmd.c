@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/15 18:44:59 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/15 19:11:44 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ int	main(void)
 	PROMPT;
 	while (ft_gnl(0, &line) == 1)
 	{
+		if (!line[0])
+		{
+			PROMPT;
+			continue;
+		}
 		cmd = msh_splitargs(line);
 		free(line);
 		if (ft_strcmp(cmd[0], "exit") == 0)
@@ -38,7 +43,10 @@ int	msh_checkcmd(char **cmd)
 	//envoyer av[0] dans execv /bin/cmd
 	//SI DIFFERENT DES BUILTIN
 	if (cmd[0])
-		return(msh_execbin(cmd));
+	{
+		if (msh_checkbuilt(cmd) == 0)
+			return(msh_execbin(cmd));
+	}
 	return(0);
 }
 
@@ -57,4 +65,11 @@ int	msh_execbin(char **cmd)
 		wait (&pid);
 	PROMPT;
 	return(1);
+}
+
+int msh_checkbuilt(char **cmd)
+{
+	cmd = NULL;
+	PROMPT;
+	return (1);
 }
