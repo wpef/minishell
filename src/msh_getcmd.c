@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/15 22:13:14 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/16 16:06:52 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //coder modifenv ==> modif valeur de (getenvpos(arg));
 //montrer le bug a francis
 
-static void ft_print_tab(char **tab) //go to lib
+void ft_print_tab(char **tab) //go to lib
 {
 	int i;
 
@@ -86,11 +86,21 @@ int msh_checkbuilt(char **cmd, char **environ)
 	}
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
-		//msh_changedir();
+		msh_chdir(cmd, environ);
 		return(0);
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
+	{
+		msh_setenv(environ, cmd);
 		return(0);
+	}
+	//debug
+	else if (ft_strcmp(cmd[0], "getenv") == 0)
+	{
+		msh_getenv(environ, cmd[1]);
+		return(0);
+	}
+	//EOdebug
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 		return(0);
 	return (-1);
