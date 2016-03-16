@@ -6,7 +6,7 @@
 /*   By: Perso <Perso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:25:20 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/15 16:21:09 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/16 21:03:28 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void				ft_putnbr(intmax_t n);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_putendl(char const *s);
 void				ft_putendl_fd(char const *s, int fd);
+void				ft_print_tab(char **tab);
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 void				ft_striter(char *s, void (*f)(char *));
@@ -83,6 +84,7 @@ char				**ft_strsplit (char const *s, char c);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				**ft_strsplit (char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_joinjoin(char *s1, char *s2, char *s3);
 char				*ft_strtrim (char const *s);
 char				*ft_itoa(int n);
 void				ft_strdel (char **as);
