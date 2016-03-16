@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/16 16:33:29 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/16 20:40:02 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	msh_getenvi(char **environ, char *var)
 		else
 			return (i);
 	}
+	if (environ[i] == NULL)
+		return(i);
 	return (-1);
 }
 
@@ -62,21 +64,15 @@ int	msh_setenv(char **env, char **cmd)
 	
 	i = 0;
 	var = ft_strdup(cmd[1]);
-	value = (cmd[1] ? ft_strdup(cmd[2]) : NULL); //if cmd[1] NULL, 2 segv
+	value = (cmd[1] ? ft_strdup(cmd[2]) : NULL); //if cmd[1] NULL, [2] segv
 	if (!var)
 		ft_print_tab(env);
 	else
 	{
 		i = msh_getenvi(env, var);
-		if (i >= 0) //var existe dans env
-		{
+		if (env[i] != NULL) //var existe dans env
 			ft_bzero(env[i], ft_strlen(env[i]));
-			env[i] = ft_joinjoin(var,"=",value);
-		}
-		else //creer nouvelles variable;
-		{
-			
-		}
+		env[i] = ft_joinjoin(var,"=",value);
 		return (1);
 	}
 	return (0); // check what to do en fonction de return

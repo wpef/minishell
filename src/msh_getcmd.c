@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/16 16:06:52 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/16 20:34:40 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void ft_print_tab(char **tab) //go to lib
 	i = 0;
 	while (tab[i] != NULL)
 	{
-		ft_putendl(tab[i]);
-			i++;
+		if (tab[i][0] != '\0')
+			ft_putendl(tab[i]);
+		i++;
 	}
 }
 
