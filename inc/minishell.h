@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/16 21:04:02 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/17 13:19:45 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 # include "libft.h"
 # include <stdio.h>
 # define PROMPT ft_putstr("$> ")
+
+typedef struct	s_env {
+	char *var;
+	char *val;
+	//char *str; //for joinjoin(var, =, val);
+	struct s_env *next;
+}	t_env;
+
+global t_env	g_env;
 
 char	**msh_splitargs(const char *cmd);
 int		msh_execbin(char **cmd);
