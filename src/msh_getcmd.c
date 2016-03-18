@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/18 21:02:11 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 23:07:53 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,23 @@ int	main(int ac, char **av, char **env)
 	char *line;
 	char **cmd;
 	int i;
+	t_env *env_list;
 
 	i = 0;
 	line = NULL;
-	msh_genvinit();
+	env_list = NULL;
 	if (ac && av)
 	{
+		while (env[i] != NULL)
+		{
+			msh_makeenv(env[i], &env_list);
+			i++;
+		}
 		PROMPT;
 		while (ft_gnl(0, &line) == 1)
 		{
 			cmd = msh_splitargs(line);
-			while (env[i] != NULL)
-			{
-				msh_getenv(env[i]);
-				i++;
-			}
-			if (line[0] && msh_checkbuilt(cmd) == -1)
+			if (line[0] && msh_checkbuilt(cmd, &env_list) == -1)
 			{
 				return(0);
 				/*
@@ -58,30 +59,23 @@ int	main(int ac, char **av, char **env)
 	return (-1);
 }
 
-void	msh_genvinit(void)
-{
-	g_env.var = NULL;
-	g_env.val= NULL;
-	g_env.next = NULL;
-}
-
-void	msh_getenv(char *envi)
+void	msh_makeenv(char *envi, t_env **env)
 {
 	t_env *curs;
 	t_env *ptr;
 	int split;
 
 	split = ft_charindex(envi, '=');
-	curs = &g_env;
+	curs = *env;
 	//maillon creer
 	ptr = malloc(sizeof(t_env));
 	ptr->var = ft_strsub(envi, 0, split);
 	ptr->val = ft_strsub(envi, split + 1, ft_strlen(envi));
 	ptr->next = NULL;
 	//parcours chaine
-	if (g_env.var == NULL)
+	if (*env == NULL)
 	{
-		g_env = *ptr;
+		*env = ptr;
 		return;
 	}
 	while (curs->next != NULL)
@@ -90,26 +84,23 @@ void	msh_getenv(char *envi)
 	curs->next = ptr;
 }
 
-int msh_checkbuilt(char **cmd)
+int msh_checkbuilt(char **cmd, t_env **env_list)
 {
-	//pour compil
-	char **environ = NULL;
-	
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		exit(EXIT_SUCCESS);
 	if (ft_strcmp(cmd[0], "env") == 0)
 	{
-		msh_env(cmd);
+		msh_env(cmd, *env_list);
 		return (0);
 	}
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
-		msh_chdir(cmd, environ);
+		//msh_chdir(cmd, environ);
 		return(0);
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
 	{
-		msh_setenv(environ, cmd);
+		msh_setenv(cmd, env_list);
 		return(0);
 	}
 	//debug
