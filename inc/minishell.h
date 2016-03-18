@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/17 16:07:37 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 20:53:39 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@
 typedef struct	s_env {
 	char *var;
 	char *val;
-	//char *str; //for joinjoin(var, =, val);
+	//char *str; //for joinjoin(var, =, val); //devrait etre re-done a chaque changement
 	struct s_env *next;
 }	t_env;
 
-global t_env	g_env;
+t_env	g_env;
 
+void	msh_genvinit(void);
+void	msh_getenv(char *envi);
 char	**msh_splitargs(const char *cmd);
-int		msh_execbin(char **cmd);
-int		msh_checkbuilt(char **cmd, char **environ);
-void	ft_print_tab(char **tab); //go libft
+int		msh_checkbuilt(char **cmd);
 
 /*
  * msh_env
  */
 
-int		msh_getenvi(char **env, char *name);
+int		msh_env(char **cmd);
+int		msh_printenv(void);
 int		msh_setenv(char **env, char **cmd);
-char	*msh_getenv(char **env, char *var);
 
 /*
  * msh_chdir

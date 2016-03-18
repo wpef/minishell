@@ -6,46 +6,35 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/16 20:40:02 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 20:55:36 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	msh_getenvi(char **environ, char *var)
+int	msh_env(char **cmd)
 {
-	int i;
-	
-	i = 0;
-	while (var && environ[i] != NULL)
-	{
-		if (ft_strnstr(environ[i], var, ft_strlen(var)) == NULL)
-			i++;
-		else
-			return (i);
-	}
-	if (environ[i] == NULL)
-		return(i);
-	return (-1);
+	if (cmd[1] == NULL)
+		return(msh_printenv());
+	return(0);
 }
 
-char	*msh_getenv(char **env, char *var)
+int	msh_printenv(void)
 {
-	int i;
-	int len;
+	t_env	*curs;
 
-	i = msh_getenvi(env, var);
-	len = 0;
-	if (i >= 0)
+	curs = &g_env;
+	while (curs != NULL)
 	{
-		len = ft_strlen(var) + 1; 
-		return (ft_strsub(env[i], len, ft_strlen(env[i]) - len));
+		ft_putstr(curs->var);
+		ft_putchar('=');
+		ft_putendl(curs->val);
+		curs = curs->next;
 	}
-	else
-		return (NULL);
+	return (1);
 }
 
-int	msh_setenv(char **env, char **cmd)
+int	msh_setenv(char **env, char **cmd) //TOUT FAUX EVIDEMMENT
 {
 	char *var;
 	char *value;
@@ -58,7 +47,6 @@ int	msh_setenv(char **env, char **cmd)
 		ft_print_tab(env);
 	else
 	{
-		i = msh_getenvi(env, var);
 		if (env[i] != NULL) //var existe dans env
 			ft_bzero(env[i], ft_strlen(env[i]));
 		env[i] = ft_joinjoin(var,"=",value);

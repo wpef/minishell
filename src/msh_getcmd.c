@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/17 16:07:29 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 20:55:25 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,37 @@
 //coder modifenv ==> modif valeur de (getenvpos(arg));
 //montrer le bug a francis
 
-int	main(int ac, char **av, char **environ)
+int	main(int ac, char **av, char **env)
 {
 	char *line;
 	char **cmd;
+	int i;
 
+	i = 0;
+	line = NULL;
+	msh_genvinit();
 	if (ac && av)
 	{
 		PROMPT;
-		line = NULL;
 		while (ft_gnl(0, &line) == 1)
 		{
 			cmd = msh_splitargs(line);
-			if (line[0] && msh_checkbuilt(cmd, environ) == -1)
-			{ //enlever ces crochets pour le pb d'env
+			while (env[i] != NULL)
+			{
+				msh_getenv(env[i]);
+				i++;
+			}
+			if (line[0] && msh_checkbuilt(cmd) == -1)
+			{
+				return(0);
+				/*
 				if (msh_execbin(cmd) == -1)
 				{
 					ft_sdebug("minishell: command not found: %", cmd[0]);
 					exit(EXIT_SUCCESS);
 				}
-			} //idem
+				*/
+			}
 			free(line);
 			PROMPT;
 		}
@@ -47,30 +58,48 @@ int	main(int ac, char **av, char **environ)
 	return (-1);
 }
 
-int	msh_execbin(char **cmd)
+void	msh_genvinit(void)
 {
-	char	*path;
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		//doit recup env.PATH;
-		path = ft_strjoin("/bin/", cmd[0]);
-		return(execv(path, cmd));
-	}
-	else
-		wait (&pid);
-	return(1);
+	g_env.var = NULL;
+	g_env.val= NULL;
+	g_env.next = NULL;
 }
 
-int msh_checkbuilt(char **cmd, char **environ)
+void	msh_getenv(char *envi)
 {
+	t_env *curs;
+	t_env *ptr;
+	int split;
+
+	split = ft_charindex(envi, '=');
+	curs = &g_env;
+	//maillon creer
+	ptr = malloc(sizeof(t_env));
+	ptr->var = ft_strsub(envi, 0, split);
+	ptr->val = ft_strsub(envi, split + 1, ft_strlen(envi));
+	ptr->next = NULL;
+	//parcours chaine
+	if (g_env.var == NULL)
+	{
+		g_env = *ptr;
+		return;
+	}
+	while (curs->next != NULL)
+		curs = curs->next;
+	//place maillon;
+	curs->next = ptr;
+}
+
+int msh_checkbuilt(char **cmd)
+{
+	//pour compil
+	char **environ = NULL;
+	
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		exit(EXIT_SUCCESS);
 	if (ft_strcmp(cmd[0], "env") == 0)
 	{
-		ft_print_tab(environ);
+		msh_env(cmd);
 		return (0);
 	}
 	else if (ft_strcmp(cmd[0], "cd") == 0)
@@ -80,13 +109,13 @@ int msh_checkbuilt(char **cmd, char **environ)
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
 	{
-		msh_setenv(environ, cmd);
+		//msh_setenv(environ, cmd);
 		return(0);
 	}
 	//debug
 	else if (ft_strcmp(cmd[0], "getenv") == 0)
 	{
-		msh_getenv(environ, cmd[1]);
+		//msh_getenv(environ, cmd[1]);
 		return(0);
 	}
 	//EOdebug
