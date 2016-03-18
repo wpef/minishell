@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/18 23:09:01 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 23:11:20 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	msh_printenv(t_env **env_list)
 	{
 		ft_putstr(curs->var);
 		ft_putchar('=');
-		ft_putendl(curs->val);
+		ft_putendl(curs->val ? curs->val : "");
 		curs = curs->next;
 	}
 	return (1);
