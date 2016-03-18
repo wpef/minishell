@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/18 20:55:36 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/18 21:00:24 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	msh_setenv(char **env, char **cmd) //TOUT FAUX EVIDEMMENT
 	i = 0;
 	var = ft_strdup(cmd[1]);
 	value = (cmd[1] ? ft_strdup(cmd[2]) : NULL); //if cmd[1] NULL, [2] segv
+	if (msh_env(cmd) == 1)
+		return(1);
 	if (!var)
 		ft_print_tab(env);
 	else
