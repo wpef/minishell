@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 05:32:14 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 05:43:46 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	msh_chdir(char **cmd, t_env **env_list)
 		//gestion flags
 		i++;
 	}
+	//si cmd[i] est present dans .
+		//ft_joinjoin(PWD, /, cmd[i])
+	//si non verifier dans /
+		//si oui ft_strjoin(/, cmd[i])
+		//else ERROR
+	//puis faire ca :
 	msh_setenv("OLDPWD", cmd[i], env_list); //ecrit nouveau chemin dans oldpwd
 	msh_switchvar("PWD", "OLDPWD", env_list); //echange old et new
 	chdir(msh_returnval("PWD", env_list));
