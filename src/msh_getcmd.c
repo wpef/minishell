@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 02:23:59 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 02:55:06 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,11 @@ int	main(int ac, char **av, char **env)
 			cmd = msh_splitargs(line);
 			if (line[0] && msh_checkbuilt(cmd, &env_list) == -1)
 			{
-				return(0);
-				/*
-				if (msh_execbin(cmd) == -1)
+				if (msh_exec(cmd, &env_list) == -1)
 				{
 					ft_sdebug("minishell: command not found: %", cmd[0]);
 					exit(EXIT_SUCCESS);
 				}
-				*/
 			}
 			free(line);
 			PROMPT;
