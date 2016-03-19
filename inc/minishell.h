@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 04:38:41 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 05:16:24 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int		msh_unsetenv(char *var, t_env **env_list);
  * msh_chdir
  */
 
-int		msh_chdir(char **cmd, char **env);
+int		msh_chdir(char **cmd, t_env **env_list);
+int		msh_gohome(t_env **env_list);
 
 /*
  * msh_tools
@@ -54,6 +55,7 @@ int		msh_chdir(char **cmd, char **env);
 
 char	*msh_returnval(char *val, t_env **env_list);
 char	**msh_makeenvtab(t_env	**env_list);
+void	msh_switchvar(char *var1, char *var2, t_env **env_list);
 
 /*
  * msh_exec

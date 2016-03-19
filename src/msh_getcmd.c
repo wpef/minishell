@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 04:38:45 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 05:10:47 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	}
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
-		//msh_chdir(cmd, environ);
+		msh_chdir(cmd, env_list);
 		return(0);
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
