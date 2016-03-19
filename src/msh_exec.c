@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 03:21:22 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 04:38:32 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ int msh_exec(char **cmd, t_env **env_list) //if bin direct
 	while (paths[i])
 	{
 		binpath = ft_joinjoin(paths[i], "/", cmd[0]);
-		if (msh_execbin(binpath, cmd, env_tab) == 1)
+		if (access(binpath, F_OK) == 0)
+		{
+			msh_execbin(binpath, cmd, env_tab);
 			return(1);
+		}
 		i++;
 		free(binpath);
 	}
@@ -39,7 +42,10 @@ int	msh_execbin(char *binpath, char **flags, char **env)
 	
 	pid = fork();
 	if (pid == 0)
-		return(execve(binpath, flags, env));
+	{
+		if (execve(binpath, flags, env) == -1)
+			return (-1);
+	}
 	else
 		wait (&pid);
 	return(1);
