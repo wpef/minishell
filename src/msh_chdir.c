@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 05:43:46 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 20:04:13 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	msh_chdir(char **cmd, t_env **env_list)
 {
 	int i;
+	char *newpath;
 
 	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
 	{
@@ -33,15 +34,22 @@ int	msh_chdir(char **cmd, t_env **env_list)
 		//gestion flags
 		i++;
 	}
-	//si cmd[i] est present dans .
-		//ft_joinjoin(PWD, /, cmd[i])
-	//si non verifier dans /
-		//si oui ft_strjoin(/, cmd[i])
-		//else ERROR
-	//puis faire ca :
-	msh_setenv("OLDPWD", cmd[i], env_list); //ecrit nouveau chemin dans oldpwd
-	msh_switchvar("PWD", "OLDPWD", env_list); //echange old et new
-	chdir(msh_returnval("PWD", env_list));
+	if (cmd[i + 1] == NULL)
+	{
+		newpath = NULL;
+		chdir(cmd[i]);
+		if (newpath = getcwd(newpath, MAXPATHLEN) != NULL)
+		{
+			msh_setenv("PWD", ft_strdup(newpath), env_list);
+			free(newpath);
+			return (1);
+		}
+		return (0);
+	}
+	else 
+	{
+		//remplace cmd[i] par cmd[i + 1] dans PWD + chdir(pwd);
+	}
 	return(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 05:16:24 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/19 19:57:15 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # include "libft.h"
 # include <stdio.h>
+# include <sys/param.h>
 # define PROMPT ft_putstr("$> ")
 
 typedef struct	s_env {
