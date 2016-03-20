@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/20 22:01:57 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 23:13:55 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,17 @@ int	main(int ac, char **av, char **env)
 	env_list = NULL;
 	if (ac && av)
 	{
+		//PUT SA
 		while (env[i] != NULL)
 		{
 			msh_makeenv(env[i], &env_list);
 			i++;
 		}
+		//JUSQUE LA
 		PROMPT;
 		while (ft_gnl(0, &line) == 1)
 		{
+			//ET CA
 			cmd = msh_splitargs(line);
 			if (line[0] && msh_checkbuilt(cmd, &env_list) == -1)
 			{
@@ -46,11 +49,17 @@ int	main(int ac, char **av, char **env)
 					ft_sdebug("minishell: command not found: %", cmd[0]);
 			}
 			free(line);
+			//JUSQUE LA...
 			PROMPT;
 		}
 		return(0);
 	}
 	return (-1);
+}
+
+void	msh_getcmd(char **cmd /*ou line*/, char **env)
+{
+	//... ICI
 }
 
 void	msh_makeenv(char *envi, t_env **env)
