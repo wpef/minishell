@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 05:23:45 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 22:20:14 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,33 @@ char	**msh_makeenvtab(t_env **env_list)
 	return(tab);
 }
 
-//char	**msh_makespeenv(t_env **env_list, struct flag);
-//
+t_env	*msh_envcpy(t_env **env_list)
+{
+	t_env	*new_env;
+	t_env	*curs;
+	char	*tmp;
+
+	new_env = NULL;
+	curs = *env_list;
+	while (curs != NULL)
+	{
+		tmp = ft_joinjoin(curs->var, "=", curs->val);
+		msh_makeenv(tmp, &new_env);
+		curs=curs->next;
+		free(tmp);
+	}
+	return(new_env);
+}
+
+t_env	*msh_varcpy(t_env *src)
+{
+	t_env *new;
+	new = malloc(sizeof(t_env));
+	new->var = ft_strdup(src->var);
+	new->val = ft_strdup(src->val);
+	new->next = NULL;
+	return(new);
+}
 
 void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 {

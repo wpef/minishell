@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 05:10:47 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 22:01:57 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	msh_makeenv(char *envi, t_env **env)
 
 	split = ft_charindex(envi, '=');
 	curs = *env;
-	//maillon creer
+	//maillon creer;
 	ptr = malloc(sizeof(t_env));
 	ptr->var = ft_strsub(envi, 0, split);
 	ptr->val = ft_strsub(envi, split + 1, ft_strlen(envi));

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 02:35:52 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 22:02:28 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	msh_env(char **cmd, t_env *env_list)
 	int i;
 	char **var;
 	int j;
+	t_env	*newenv_list;
 
 	i = 1;
 	j = 0;
+	newenv_list = msh_envcpy(&env_list);
 	if (cmd[i] == NULL)
-		return(msh_printenv(&env_list));
+		return(msh_printenv(&newenv_list));
 	while (cmd[i][j] == '-')
 	{
 		//gestion flag en struct
@@ -33,7 +35,7 @@ int	msh_env(char **cmd, t_env *env_list)
 		i++;
 	}
 	var = ft_strsplit(cmd[i], '=');
-	msh_setenv(var[0], var[1], &env_list);
+	msh_setenv(var[0], var[1], &/*new*/env_list);
 	return(0);
 }
 
@@ -95,7 +97,7 @@ int	msh_unsetenv(char *vari, t_env **env_list)
 	t_env *curs;
 	
 	curs = *env_list;
-	while (vari && curs->next != NULL) //check si curs->next insted of curs pose pas de pb
+	while (vari && curs->next != NULL)
 	{
 		if (ft_strcmp(vari, curs->next->var) == 0)
 		{

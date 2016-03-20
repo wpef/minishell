@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 19:57:15 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 22:20:18 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ typedef struct	s_env {
 	struct s_env *next;
 }				t_env;
 
-typedef struct	s_flags {
-	int i;
-	int u;
-	//etc
-}				t_flags;
+//typedef struct	s_flags { 
+//	int i;
+//	int u;
+//}				t_flags;
 
 void	msh_makeenv(char *envi, t_env **env_list);
 char	**msh_splitargs(const char *cmd);
@@ -57,6 +56,8 @@ int		msh_gohome(t_env **env_list);
 char	*msh_returnval(char *val, t_env **env_list);
 char	**msh_makeenvtab(t_env	**env_list);
 void	msh_switchvar(char *var1, char *var2, t_env **env_list);
+t_env	*msh_envcpy(t_env **env_list);
+
 
 /*
  * msh_exec

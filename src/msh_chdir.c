@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/19 20:04:13 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/20 19:51:08 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	{
 		newpath = NULL;
 		chdir(cmd[i]);
-		if (newpath = getcwd(newpath, MAXPATHLEN) != NULL)
+		if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
 		{
 			msh_setenv("PWD", ft_strdup(newpath), env_list);
 			free(newpath);
@@ -48,6 +48,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	}
 	else 
 	{
+		//PAS SUR //
 		//remplace cmd[i] par cmd[i + 1] dans PWD + chdir(pwd);
 	}
 	return(0);
