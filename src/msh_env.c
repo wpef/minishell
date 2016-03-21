@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 15:26:19 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 17:37:46 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,33 @@ int	msh_env(char **cmd, t_env *env_list)
 	newenv_list = msh_envcpy(&env_list); //est-ce que cest vraiment necessaire ??
 	if (cmd[1] == NULL)
 		return(msh_printenv(&newenv_list));
-	while (cmd[i] && cmd[i][j] == '-')
+	while (cmd[i] && cmd[i][0] == '-')
 	{
-		//if (cmd [i][0] == '\0' || cmd[i][j] == 'i'
-		//	|| ft_strcmp(cmd[i], "-ignore-environment") == 0)
-		//		flags_i = 1;
-		//etc.
+		if (cmd[i][1] == 'i')
+			newenv_list = NULL;
+		else if (cmd[i][1] == 'u')
+		{
+			i++;
+			msh_unsetenv(cmd[i], &newenv_list);
+		}
 		i++;
 	}
-	var = ft_strsplit(cmd[i], '=');
-	msh_setenv(var[0], var[1], &newenv_list);
-	*cmd = cmd[i];
-	newenv = msh_makeenvtab(&newenv_list);
-	ft_putendl("send new env =");
-	//debug
-	while (newenv[j])
+	while (ft_charindex(cmd[i], '=' > 0))
 	{
-		if (newenv[j][0] != '\0')
-			ft_putendl(newenv[j]);
-		j++;
+		var = ft_strsplit(cmd[i], '=');
+		msh_setenv(var[0], var[1], &newenv_list);
+		i++;
 	}
-	msh_getcmd(cmd, newenv);
+	if (cmd[i] && cmd[i][0] != '\0')
+	{
+		//free cmd -> cmd[i];
+		*cmd = cmd[i];
+		newenv = msh_makeenvtab(&newenv_list);
+		ft_putendl("envoi new cmd");
+		msh_getcmd(cmd, newenv);
+	}
+	else
+		return(msh_printenv(&newenv_list));
 	return(0);
 }
 
