@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:13:03 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/22 00:57:32 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,18 +101,15 @@ void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 	}
 }
 
-int	msh_error(char *index)
+int	msh_error(char *index, char *prompt)
 {
-	if (index)	
-		msh_troll();
+	if (ft_strcmp(index, "home") == 0)
+		ft_putendl("cd: Can't change to home directory.");
+	else if (ft_strcmp(index, "chdir") == 0)
+		ft_sdebug("%: No such file or directory", prompt);
+	else if (ft_strcmp(index, "perm") == 0)
+		ft_sdebug("cd: permission denied: %", prompt);
+	else
+		ft_sdebug("+++++ ANORMAL ERROR AT : % ++++++", prompt);
 	return(-1);
-}
-
-void	msh_troll(void)
-{
-	char **p;
-	p = malloc(sizeof(char *) * 2);
-	p[0] = ft_strdup("/usr/bin/open");
-	p[1] = ft_strdup("http://hieraujourdhuidemain.blogs.sudouest.fr/media/02/02/891764349.jpg");
-	execve(p[0], p, NULL);
 }

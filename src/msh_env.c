@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:25:48 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/22 00:58:05 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	msh_env(char **cmd, t_env *env_list)
 	char **var;
 	int j;
 	t_env	*newenv_list;
-	char **newenv;
 
 	i = 1;
 	j = 0;
@@ -42,9 +41,8 @@ int	msh_env(char **cmd, t_env *env_list)
 	}
 	if (cmd[i] && cmd[i][0] != '\0')
 	{
-		//free cmd -> cmd[i];
+	//	free cmd -> cmd[i];
 		cmd = &cmd[i];
-		newenv = msh_makeenvtab(&newenv_list); //useless
 		msh_getcmd(cmd, &newenv_list);
 	}
 	else

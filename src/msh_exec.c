@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 19:57:43 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/22 00:40:20 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int msh_exec(char **cmd, t_env **env_list) //if bin direct
 		paths = ft_strsplit(path, ':');
 	else
 		paths = ft_strsplit("/usr/bin:/bin", ':');
-	free(path);
 	env_tab = msh_makeenvtab(env_list);
 	while (paths[i])
 	{
