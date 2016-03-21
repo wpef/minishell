@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 18:22:35 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 19:45:28 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,28 @@
 int msh_exec(char **cmd, t_env **env_list) //if bin direct
 {
 	char	**paths;
-	char	*binpath;
+	char	*path;
 	char	**env_tab;
 	int		i;
 
 	i = 0;
-	paths = ft_strsplit(msh_returnval("PATH", env_list), ':');
+	path = msh_returnval("PATH", env_list);
+	if (path != NULL)
+		paths = ft_strsplit(path, ':');
+	else
+		paths = ft_strsplit("/usr/bin:/bin", ':');
+	free(path);
 	env_tab = msh_makeenvtab(env_list);
 	while (paths[i])
 	{
-		binpath = ft_joinjoin(paths[i], "/", cmd[0]);
-		if (access(binpath, F_OK) == 0)
+		path = ft_joinjoin(paths[i], "/", cmd[0]);
+		if (access(path, F_OK) == 0)
 		{
-			msh_execbin(binpath, cmd, env_tab);
+			msh_execbin(path, cmd, env_tab);
 			return(1);
 		}
 		i++;
-		free(binpath);
+		free(path);
 	}
 	return (-1);
 }
