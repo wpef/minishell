@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:19:10 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/22 00:28:30 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,26 @@
 int	main(int ac, char **av, char **env)
 {
 	char *line;
+	t_env *env_list;
 	char **cmd;
+	int i;
 
+	i = 0;
 	line = NULL;
+	env_list = NULL;
+	while (env[i] != NULL)
+	{
+		if (env[i][0] != '\0') //degueu
+			msh_makeenv(env[i], &env_list);
+		i++;
+	}
 	if (ac && av)
 	{
 		PROMPT;
 		while (ft_gnl(0, &line) == 1)
 		{
 			cmd = msh_splitargs(line);
-			msh_getcmd(cmd, env);
+			msh_getcmd(cmd, &env_list);
 			PROMPT;
 			free(line);
 		}
@@ -33,22 +43,14 @@ int	main(int ac, char **av, char **env)
 	return (-1);
 }
 
-void	msh_getcmd(char **cmd, char **env)
+void	msh_getcmd(char **cmd, t_env **env_list)
 {
-	t_env *env_list;
 	int i;
 
 	i = 0;
-	env_list = NULL;
-	while (env[i] != NULL)
+	if (msh_checkbuilt(cmd, env_list) == -1)
 	{
-		if (env[i][0] != '\0') //degueu
-			msh_makeenv(env[i], &env_list);
-		i++;
-	}
-	if (msh_checkbuilt(cmd, &env_list) == -1)
-	{
-		if (msh_exec(cmd, &env_list) == -1)
+		if (msh_exec(cmd, env_list) == -1)
 			ft_sdebug("minishell: command not found: %", cmd[0]);
 	}
 }
