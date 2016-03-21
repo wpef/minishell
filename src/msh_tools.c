@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 18:20:03 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/22 00:13:03 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,6 @@ t_env	*msh_envcpy(t_env **env_list)
 	return (new_env);
 }
 
-t_env	*msh_varcpy(t_env *src)
-{
-	t_env *new;
-	new = malloc(sizeof(t_env));
-	new->var = ft_strdup(src->var);
-	new->val = ft_strdup(src->val);
-	new->next = NULL;
-	return (new);
-}
-
 void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 {
 	t_env	*curs;
@@ -109,4 +99,20 @@ void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 		}
 		curs = curs->next;
 	}
+}
+
+int	msh_error(char *index)
+{
+	if (index)	
+		msh_troll();
+	return(-1);
+}
+
+void	msh_troll(void)
+{
+	char **p;
+	p = malloc(sizeof(char *) * 2);
+	p[0] = ft_strdup("/usr/bin/open");
+	p[1] = ft_strdup("http://hieraujourdhuidemain.blogs.sudouest.fr/media/02/02/891764349.jpg");
+	execve(p[0], p, NULL);
 }
