@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 17:37:46 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 18:18:58 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	msh_env(char **cmd, t_env *env_list)
 		}
 		i++;
 	}
-	while (ft_charindex(cmd[i], '=' > 0))
+	while (ft_charindex(cmd[i], '=') > 0)
 	{
+		ft_idebug("charindex = ",ft_charindex(cmd[i], '='));
 		var = ft_strsplit(cmd[i], '=');
 		msh_setenv(var[0], var[1], &newenv_list);
 		i++;
@@ -84,7 +85,7 @@ int	msh_setenv(char *var, char *val, t_env **env_list)
 		if (ft_strcmp(var, curs->var) == 0)
 		{
 			free(curs->val);
-			curs->val = val;
+			curs->val = (val ? val : NULL);
 			return (1);
 		}
 		curs = curs->next;

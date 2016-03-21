@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 17:59:04 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 18:22:38 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,6 @@ void	msh_getcmd(char **cmd, char **env)
 	}
 }
 
-void	msh_makeenv(char *envi, t_env **env)
-{
-	t_env *curs;
-	t_env *ptr;
-	int split;
-
-	split = ft_charindex(envi, '=');
-	curs = *env;
-	//maillon creer;
-	ptr = malloc(sizeof(t_env));
-	ptr->var = ft_strsub(envi, 0, split);
-	ptr->val = ft_strsub(envi, split + 1, ft_strlen(envi));
-	ptr->next = NULL;
-	//parcours chaine
-	if (*env == NULL)
-	{
-		*env = ptr;
-		return;
-	}
-	while (curs->next != NULL)
-		curs = curs->next;
-	//place maillon;
-	curs->next = ptr;
-}
-
 int msh_checkbuilt(char **cmd, t_env **env_list)
 {
 	if (ft_strcmp(cmd[0], "exit") == 0)
@@ -112,4 +87,29 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 		return(0);
 	return (-1);
+}
+
+void	msh_makeenv(char *envi, t_env **env)
+{
+	t_env *curs;
+	t_env *ptr;
+	int split;
+
+	split = ft_charindex(envi, '=');
+	curs = *env;
+	//maillon creer;
+	ptr = malloc(sizeof(t_env));
+	ptr->var = ft_strsub(envi, 0, split);
+	ptr->val = ft_strsub(envi, split + 1, ft_strlen(envi));
+	ptr->next = NULL;
+	//parcours chaine
+	if (*env == NULL)
+	{
+		*env = ptr;
+		return;
+	}
+	while (curs->next != NULL)
+		curs = curs->next;
+	//place maillon;
+	curs->next = ptr;
 }
