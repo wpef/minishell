@@ -20,7 +20,7 @@ char *msh_returnval(char *var, t_env **env_list)
 	while (curs != NULL)
 	{
 		if (ft_strcmp(var, curs->var) == 0)
-			return(curs->val);
+			return (curs->val);
 		curs = curs->next;
 	}
 	return (NULL);
@@ -52,7 +52,7 @@ char	**msh_makeenvtab(t_env **env_list)
 		free(tmp);
 	}
 	tab[i] = NULL;
-	return(tab);
+	return (tab);
 }
 
 t_env	*msh_envcpy(t_env **env_list)
@@ -70,7 +70,7 @@ t_env	*msh_envcpy(t_env **env_list)
 		curs=curs->next;
 		free(tmp);
 	}
-	return(new_env);
+	return (new_env);
 }
 
 t_env	*msh_varcpy(t_env *src)
@@ -80,7 +80,7 @@ t_env	*msh_varcpy(t_env *src)
 	new->var = ft_strdup(src->var);
 	new->val = ft_strdup(src->val);
 	new->next = NULL;
-	return(new);
+	return (new);
 }
 
 void	msh_switchvar(char *var1, char *var2, t_env **env_list)

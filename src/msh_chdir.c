@@ -20,7 +20,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
 	{
 		msh_gohome(env_list);
-		return(1);
+		return (1);
 	}
 	i = 1;
 	while (cmd[i][0] == '-')
@@ -29,7 +29,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 		{
 			msh_switchvar("PWD", "OLDPWD", env_list);
 			chdir(msh_returnval("PWD", env_list));
-			return(1);
+			return (1);
 		}
 		//gestion flags
 		i++;
@@ -51,7 +51,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 		//PAS SUR //
 		//remplace cmd[i] par cmd[i + 1] dans PWD + chdir(pwd);
 	}
-	return(0);
+	return (0);
 }
 
 int	msh_gohome(t_env **env_list)
@@ -62,5 +62,5 @@ int	msh_gohome(t_env **env_list)
 	chdir(home);
 	msh_setenv("OLDPWD", ft_strdup(msh_returnval("PWD", env_list)), env_list);
 	msh_setenv("PWD", home, env_list);
-	return(1);
+	return (1);
 }

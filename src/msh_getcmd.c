@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **env)
 			PROMPT;
 			free(line);
 		}
-		return(0);
+		return (0);
 	}
 	return (-1);
 }
@@ -69,12 +69,12 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
 		msh_chdir(cmd, env_list);
-		return(0);
+		return (0);
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
 	{
 		msh_setenv(cmd[1], cmd[2], env_list);
-		return(0);
+		return (0);
 	}
 	//debug
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
@@ -82,11 +82,11 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 		i = 1;
 		while (cmd[i] != NULL && cmd[i][0] != '\0')
 			msh_unsetenv(cmd[i], env_list);
-		return(0);
+		return (0);
 	}
 	//EOdebug
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
-		return(0);
+		return (0);
 	return (-1);
 }
 

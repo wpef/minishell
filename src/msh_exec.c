@@ -33,7 +33,7 @@ int msh_exec(char **cmd, t_env **env_list) //if bin direct
 		if (access(path, F_OK) == 0)
 		{
 			msh_execbin(path, cmd, env_tab);
-			return(1);
+			return (1);
 		}
 		i++;
 		free(path);
@@ -53,5 +53,5 @@ int	msh_execbin(char *binpath, char **flags, char **env)
 	}
 	else
 		wait (&pid);
-	return(1);
+	return (1);
 }

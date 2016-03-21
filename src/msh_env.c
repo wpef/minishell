@@ -48,8 +48,8 @@ int	msh_env(char **cmd, t_env *env_list)
 		msh_getcmd(cmd, newenv);
 	}
 	else
-		return(msh_printenv(&newenv_list));
-	return(0);
+		return (msh_printenv(&newenv_list));
+	return (0);
 }
 
 int	msh_printenv(t_env **env_list)
@@ -74,7 +74,7 @@ int	msh_setenv(char *var, char *val, t_env **env_list)
 	
 	i = 0;
 	if (!var)
-		return(msh_printenv(env_list));
+		return (msh_printenv(env_list));
 	curs = *env_list;
 	while (curs != NULL)
 	{
@@ -86,7 +86,7 @@ int	msh_setenv(char *var, char *val, t_env **env_list)
 		}
 		curs = curs->next;
 	}
-	return(msh_newenv(var, val, env_list));
+	return (msh_newenv(var, val, env_list));
 }
 
 int	msh_newenv(char *var, char *val, t_env **env_list)
@@ -110,7 +110,7 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 		return (1);
 	}
 	curs->next=ptr;
-	return(1);
+	return (1);
 }
 
 int	msh_unsetenv(char *vari, t_env **env_list)
