@@ -6,60 +6,50 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/20 23:13:55 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 14:51:04 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//TO DO
-//put print_tab to lib
-//coder getenvpos ==> RENVOIT INDEX DANS char **ENV
-//coder getenv ==> sub from (len de arg + 1), jusqua la fin
-//coder modifenv ==> modif valeur de (getenvpos(arg));
-//montrer le bug a francis
-
 int	main(int ac, char **av, char **env)
 {
 	char *line;
 	char **cmd;
-	int i;
-	t_env *env_list;
 
-	i = 0;
 	line = NULL;
-	env_list = NULL;
 	if (ac && av)
 	{
-		//PUT SA
-		while (env[i] != NULL)
-		{
-			msh_makeenv(env[i], &env_list);
-			i++;
-		}
-		//JUSQUE LA
 		PROMPT;
 		while (ft_gnl(0, &line) == 1)
 		{
-			//ET CA
 			cmd = msh_splitargs(line);
-			if (line[0] && msh_checkbuilt(cmd, &env_list) == -1)
-			{
-				if (msh_exec(cmd, &env_list) == -1)
-					ft_sdebug("minishell: command not found: %", cmd[0]);
-			}
-			free(line);
-			//JUSQUE LA...
+			msh_getcmd(cmd, env);
 			PROMPT;
+			free(line);
 		}
 		return(0);
 	}
 	return (-1);
 }
 
-void	msh_getcmd(char **cmd /*ou line*/, char **env)
+void	msh_getcmd(char **cmd, char **env)
 {
-	//... ICI
+	t_env *env_list;
+	int i;
+
+	i = 0;
+	env_list = NULL;
+	while (env[i] != NULL)
+	{
+		msh_makeenv(env[i], &env_list);
+		i++;
+	}
+	if (msh_checkbuilt(cmd, &env_list) == -1)
+	{
+		if (msh_exec(cmd, &env_list) == -1)
+			ft_sdebug("minishell: command not found: %", cmd[0]);
+	}
 }
 
 void	msh_makeenv(char *envi, t_env **env)

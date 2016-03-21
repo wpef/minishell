@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/20 23:13:57 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 14:47:40 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ int	msh_env(char **cmd, t_env *env_list)
 	char **var;
 	int j;
 	t_env	*newenv_list;
+	char **newenv;
 
 	i = 1;
 	j = 0;
 	newenv_list = msh_envcpy(&env_list);
-	if (cmd[i] == NULL)
+	if (cmd[1] == NULL)
 		return(msh_printenv(&newenv_list));
 	while (cmd[i] && cmd[i][j] == '-')
 	{
@@ -34,7 +35,11 @@ int	msh_env(char **cmd, t_env *env_list)
 	}
 	var = ft_strsplit(cmd[i], '=');
 	msh_setenv(var[0], var[1], &newenv_list);
-	//renvoyer un msh_checkbuilt && msh_exec; 
+	*cmd = cmd[i];
+	newenv = msh_makeenvtab(&newenv_list);
+	ft_putendl("send new env");
+	msh_getcmd(cmd, newenv);
+	ft_putendl("return new env");
 	return(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/20 22:20:18 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 14:44:09 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_env {
 //	int u;
 //}				t_flags;
 
+void	msh_getcmd(char **cmd, char **env);
 void	msh_makeenv(char *envi, t_env **env_list);
 char	**msh_splitargs(const char *cmd);
 int		msh_checkbuilt(char **cmd, t_env **env_list);
