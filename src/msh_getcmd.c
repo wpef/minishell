@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 14:51:04 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 15:23:57 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ void	msh_getcmd(char **cmd, char **env)
 
 	i = 0;
 	env_list = NULL;
+	ft_putendl("+++ IN GET CMD +++");
 	while (env[i] != NULL)
 	{
-		msh_makeenv(env[i], &env_list);
+		if (env[i][0] != '\0') //degueu
+			msh_makeenv(env[i], &env_list);
 		i++;
 	}
+	ft_putendl("env_list created");
 	if (msh_checkbuilt(cmd, &env_list) == -1)
 	{
+		ft_putendl("cmd not a env cmd");
 		if (msh_exec(cmd, &env_list) == -1)
 			ft_sdebug("minishell: command not found: %", cmd[0]);
 	}
