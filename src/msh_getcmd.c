@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/21 18:22:38 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/21 18:31:59 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	msh_getcmd(char **cmd, char **env)
 
 	i = 0;
 	env_list = NULL;
-	ft_putendl("+++ IN GET CMD +++");
 	while (env[i] != NULL)
 	{
 		if (env[i][0] != '\0') //degueu
@@ -49,7 +48,6 @@ void	msh_getcmd(char **cmd, char **env)
 	}
 	if (msh_checkbuilt(cmd, &env_list) == -1)
 	{
-		ft_putendl("cmd not a env cmd");
 		if (msh_exec(cmd, &env_list) == -1)
 			ft_sdebug("minishell: command not found: %", cmd[0]);
 	}
@@ -57,6 +55,7 @@ void	msh_getcmd(char **cmd, char **env)
 
 int msh_checkbuilt(char **cmd, t_env **env_list)
 {
+	int i;
 	if (ft_strcmp(cmd[0], "exit") == 0)
 	{
 		exit(EXIT_SUCCESS);
@@ -80,7 +79,9 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	//debug
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 	{
-		msh_unsetenv(cmd[1], env_list);
+		i = 1;
+		while (cmd[i] != NULL && cmd[i][0] != '\0')
+			msh_unsetenv(cmd[i], env_list);
 		return(0);
 	}
 	//EOdebug
