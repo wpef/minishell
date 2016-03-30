@@ -78,7 +78,6 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 		msh_setenv(cmd[1], cmd[2], env_list);
 		return (0);
 	}
-	//debug
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 	{
 		i = 1;
@@ -94,9 +93,6 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 		}
 		return (0);
 	}
-	//EOdebug
-	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
-		return (0);
 	return (-1);
 }
 
