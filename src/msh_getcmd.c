@@ -82,6 +82,11 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 	{
 		i = 1;
+		if (cmd[i] == NULL)
+		{
+			msh_error("few", "unsetenv");
+			return (0);
+		}
 		while (cmd[i] != NULL && cmd[i][0] != '\0')
 		{
 			msh_unsetenv(cmd[i], env_list);

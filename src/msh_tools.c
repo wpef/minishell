@@ -109,7 +109,22 @@ int	msh_error(char *index, char *prompt)
 		ft_sdebug("%: No such file or directory", prompt);
 	else if (ft_strcmp(index, "perm") == 0)
 		ft_sdebug("cd: permission denied: %", prompt);
+	else if (ft_strcmp(index, "argument needed") == 0)
+	{
+		ft_putendl("env: option requires an argument -- u ");
+		msh_usage(0);
+	}
+	else if (ft_strcmp(index, "invalid argument") == 0)
+		ft_sdebug("minishell: % not found", &(prompt[1]));
+	else if (ft_strcmp(index, "few") == 0)
+		ft_sdebug("%: Too few arguments.", (prompt));
 	else
 		ft_sdebug("+++++ ANORMAL ERROR AT : % ++++++", prompt);
 	return(-1);
+}
+
+void	msh_usage(int i)
+{
+	if (i == 0)
+		ft_putendl("usage: env [-i] [-u name]\n[name=value ...] [utility [argument ...]]");
 }

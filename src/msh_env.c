@@ -29,12 +29,17 @@ int	msh_env(char **cmd, t_env *env_list)
 		else if (cmd[i][1] == 'u')
 		{
 			i++;
-			msh_unsetenv(cmd[i], &newenv_list);
+			if (cmd[i])
+				msh_unsetenv(cmd[i], &newenv_list);
+			else
+				return (msh_error("argument needed", cmd[i - 1]));
 		}
 		i++;
 	}
-	while (ft_charindex(cmd[i], '=') > 0)
-	{
+	while (ft_charindex(cmd[i], '=') >= 0)
+	{ 
+		if (ft_charindex(cmd[i], '=') == 0)
+			return (msh_error("invalid argument", cmd[i]));
 		var = ft_strsplit(cmd[i], '=');
 		msh_setenv(var[0], var[1], &newenv_list);
 		i++;
@@ -115,6 +120,8 @@ int	msh_unsetenv(char *vari, t_env **env_list)
 {
 	t_env *curs;
 	
+	if (!vari)
+		return (msh_error("few", "unsetenv"));
 	curs = *env_list;
 	if (vari && ft_strcmp(vari, curs->var) == 0)
 	{

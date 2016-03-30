@@ -60,6 +60,7 @@ char	**msh_makeenvtab(t_env	**env_list);
 void	msh_switchvar(char *var1, char *var2, t_env **env_list);
 t_env	*msh_envcpy(t_env **env_list);
 int		msh_error(char *index, char *prompt);
+void	msh_usage(int i);
 
 /*
  * msh_exec
