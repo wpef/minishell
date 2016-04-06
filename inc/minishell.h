@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:55:56 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/06 22:13:19 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		msh_printenv(t_env **env_list);
 int		msh_setenv(char *var, char *val, t_env **env_list);
 int		msh_newenv(char *var, char *val, t_env **env_list);
 int		msh_unsetenv(char *var, t_env **env_list);
+int		msh_parseunset(char **cmd, t_env **env_list);
 
 /*
  * msh_chdir

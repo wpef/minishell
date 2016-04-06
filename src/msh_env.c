@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:58:05 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/06 22:15:34 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,20 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 	}
 	curs->next=ptr;
 	return (1);
+}
+int		msh_parseunset(char **cmd, t_env **env_list)
+{
+	int	i;
+
+	i = 1;
+	if (cmd[i] == NULL)
+		return (msh_error("few", "unsetenv"));
+	while (cmd[i] != NULL && cmd[i][0] != '\0')
+	{
+		msh_unsetenv(cmd[i], env_list);
+		i++;
+	}
+	return (0);
 }
 
 int	msh_unsetenv(char *vari, t_env **env_list)

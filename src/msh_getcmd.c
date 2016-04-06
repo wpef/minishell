@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/06 21:46:18 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/06 22:15:31 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	msh_getcmd(char **cmd, t_env **env_list)
 
 int msh_checkbuilt(char **cmd, t_env **env_list)
 {
-	int i;
 	if (ft_strcmp(cmd[0], "exit") == 0)
 	{
 		exit(EXIT_SUCCESS);
@@ -83,17 +82,7 @@ int msh_checkbuilt(char **cmd, t_env **env_list)
 	}
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
 	{
-		i = 1;
-		if (cmd[i] == NULL)
-		{
-			msh_error("few", "unsetenv");
-			return (0);
-		}
-		while (cmd[i] != NULL && cmd[i][0] != '\0')
-		{
-			msh_unsetenv(cmd[i], env_list);
-			i++;
-		}
+		msh_parseunset(cmd, env_list);
 		return (0);
 	}
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 12:13:34 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/15 18:00:07 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/06 22:15:36 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ char		**msh_splitargs(char const *s)
 
 	words = ft_wordscount(s);
 	i = 0;
-	tab = (char **)malloc(sizeof(char*) * words + 1);
+	tab = (char **)malloc(sizeof(char*) * (words + 1));
 	if (!tab)
+	{
+		msh_error("", "split_arg : malloc failed");
 		return (NULL);
+	}
 	strt = 0;
 	while (i < words)
 	{
