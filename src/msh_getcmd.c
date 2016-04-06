@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:40:36 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/06 21:46:18 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ int	main(int ac, char **av, char **env)
 		PROMPT;
 		while (ft_gnl(0, &line) == 1)
 		{
-			cmd = msh_splitargs(line);
-			msh_getcmd(cmd, &env_list);
+			if (line[0])
+			{
+				cmd = msh_splitargs(line);
+				msh_getcmd(cmd, &env_list);
+				free(line);
+			}
 			PROMPT;
-			free(line);
 		}
 		return (0);
 	}
