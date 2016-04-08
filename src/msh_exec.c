@@ -6,13 +6,13 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/22 00:40:20 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/08 16:52:10 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int msh_exec(char **cmd, t_env **env_list) //if bin direct
+int		msh_exec(char **cmd, t_env **env_list) //if bin direct
 {
 	char	**paths;
 	char	*path;
@@ -20,11 +20,7 @@ int msh_exec(char **cmd, t_env **env_list) //if bin direct
 	int		i;
 
 	i = 0;
-	path = msh_returnval("PATH", env_list);
-	if (path != NULL)
-		paths = ft_strsplit(path, ':');
-	else
-		paths = ft_strsplit("/usr/bin:/bin", ':');
+	paths = msh_getpaths(cmd, env_list);
 	env_tab = msh_makeenvtab(env_list);
 	while (paths[i])
 	{
@@ -40,7 +36,28 @@ int msh_exec(char **cmd, t_env **env_list) //if bin direct
 	return (-1);
 }
 
-int	msh_execbin(char *binpath, char **flags, char **env)
+char	**msh_getpaths(char **cmd, t_env **env_list)
+{
+	char	*path;
+	char	**paths;
+
+	if (cmd[0][0] == '/')
+	{
+		paths[0] = cmd[0];
+		paths[1] = NULL;
+	}
+	else
+	{
+		path = msh_returnval("PATH", env_list);
+		if (path == NULL)
+			paths = ft_strsplit("/usr/bin:/bin", ':');
+		else
+			paths = ft_strsplit(path, ':');
+	}
+	return (paths);
+}
+
+int		msh_execbin(char *binpath, char **flags, char **env)
 {
 	pid_t	pid;
 	
