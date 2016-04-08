@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/08 17:02:51 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/08 17:14:18 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ int		msh_exec(char **cmd, t_env **env_list) //if bin direct
 
 	i = 0;
 	paths = msh_getpaths(cmd, env_list);
+	//debug
+	ft_putendl("DEBUG === ");
+	if (paths)
+	{
+		while (paths[i])
+		{
+			ft_putendl(paths[i]);
+			i++;
+		}
+	}
+	i = 0;
+	//eof debug
 	env_tab = msh_makeenvtab(env_list);
 	while (paths[i])
 	{
@@ -44,6 +56,7 @@ char	**msh_getpaths(char **cmd, t_env **env_list)
 	paths = NULL;
 	if (cmd[0][0] == '/')
 	{
+		paths = malloc(sizeof (char*) * 2);
 		paths[0] = cmd[0];
 		paths[1] = NULL;
 	}
