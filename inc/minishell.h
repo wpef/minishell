@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/06 22:13:19 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/08 16:59:55 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,22 @@ typedef struct	s_env {
 //	int u;
 //}				t_flags;
 
-void	msh_getcmd(char **cmd, t_env **env);
+
+/*
+ * msh_main
+ */
+
+void	msh_readline(t_env **env_list);
 void	msh_makeenv(char *envi, t_env **env_list);
+
+/*
+ **	msh_getcmd
+ */
+
+void	msh_getcmd(char **cmd, t_env **env);
 char	**msh_splitargs(const char *cmd);
 int		msh_checkbuilt(char **cmd, t_env **env_list);
+int		msh_checknextbuilt(char **cmd, t_env **env_list);
 
 /*
  * msh_env
@@ -69,5 +81,6 @@ void	msh_usage(int i);
 
 int		msh_exec(char **cmd, t_env	**env_list);
 int		msh_execbin(char *binpath, char **flags, char **env);
+char	**msh_getpaths(char **cmd, t_env **env_list);
 
 #endif

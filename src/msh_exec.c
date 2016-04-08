@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/08 16:52:10 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/08 17:02:51 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	**msh_getpaths(char **cmd, t_env **env_list)
 	char	*path;
 	char	**paths;
 
+	paths = NULL;
 	if (cmd[0][0] == '/')
 	{
 		paths[0] = cmd[0];

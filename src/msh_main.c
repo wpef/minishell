@@ -6,7 +6,7 @@
 /*   By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/08 16:29:03 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/08 16:29:06 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/08 17:04:03 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int		main(int ac, char **av, char **env)
 	if (ac && av)
 	{
 		PROMPT;
-		msh_readline();
-		PROMPT;
+		msh_readline(&env_list);
 	}
 	return (0);
 }
@@ -67,8 +66,9 @@ void	msh_readline(t_env **env_list)
 		if (line[0])
 		{
 			cmd = msh_splitargs(line);
-			msh_getcmd(cmd, &env_list);
+			msh_getcmd(cmd, env_list);
 			free(line);
 		}
+		PROMPT;
 	}
 }
