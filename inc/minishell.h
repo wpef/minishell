@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 17:38:09 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/09 18:24:21 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int		msh_parseunset(char **cmd, t_env **env_list);
  */
 
 int		msh_chdir(char **cmd, t_env **env_list);
-int		msh_gohome(t_env **env_list, char *newpath);
+int		msh_getpwd(t_env **env_list);
+int		msh_gopath(char *newpath, t_env **env_list);
+int		msh_gohome(char *newpath, t_env **env_list);
 int		msh_switchcwd(t_env **env_list);
 
 /*

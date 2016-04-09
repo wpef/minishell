@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 17:39:15 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/09 18:26:27 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,45 @@ int	msh_chdir(char **cmd, t_env **env_list)
 
 	i = 1;
 	newpath = NULL;
+	if (msh_returnval("PWD", env_list) == NULL)
+		msh_getpwd(env_list);
 	if ((!cmd[1] || cmd[1][0] == '~') && !cmd[2])
-		return (msh_gohome(env_list, newpath));
+		return (msh_gohome(newpath, env_list));
 	if (ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
 		return (msh_switchcwd(env_list));
 	if (!cmd[2] && chdir(cmd[1]) == 0)
-	{
-		if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
-		{
-			msh_setenv("OLDPWD", newpath, env_list);
-			msh_switchvar("PWD", "OLDPWD", env_list);
-			return (1);
-		}
-		return (msh_error("getcwd", "msh_chdir line :34"));
-	}
+		return (msh_gopath(newpath, env_list));
 	else if (cmd[2])
 		return (msh_error("many", cmd[1]));
 	else
 		return (msh_error("chdir", cmd[1]));
 }
 
-int	msh_gohome(t_env **env_list, char *newpath)
+int	msh_getpwd(t_env **env_list)
+{
+	char *pwd;
+
+	pwd = NULL;
+	if ((pwd = getcwd(pwd, MAXPATHLEN)) != NULL)
+	{
+		msh_setenv("PWD", pwd, env_list);
+		return (1);
+	}
+	return (-1);
+}
+
+int	msh_gopath(char *newpath, t_env **env_list)
+{
+	if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
+	{
+		msh_setenv("OLDPWD", newpath, env_list);
+		msh_switchvar("PWD", "OLDPWD", env_list);
+		return (1);
+	}
+	return (msh_error("getcwd", "msh_chdir line :34"));
+}
+
+int	msh_gohome(char *newpath, t_env **env_list)
 {
 	char *home;
 
@@ -52,8 +70,8 @@ int	msh_gohome(t_env **env_list, char *newpath)
 		{
 			if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
 			{
-				msh_setenv("OLDPWD", msh_returnval("PWD", env_list), env_list);
-				msh_setenv("PWD", home, env_list);
+				msh_setenv("OLDPWD", home, env_list);
+				msh_switchvar("PWD", "OLDPWD", env_list);
 				return (1);
 			}
 			return (msh_error("getcwd", "msh_chdir line :59"));
