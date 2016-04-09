@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/06 21:48:52 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/09 17:39:15 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	msh_chdir(char **cmd, t_env **env_list)
 {
-	int i;
-	char *newpath;
+	int		i;
+	char	*newpath;
 
 	i = 1;
 	newpath = NULL;
-	if (!cmd[1] || cmd[1][0] == '~')
-		return(msh_gohome(env_list));
-	if (ft_strcmp(cmd[1], "-") == 0)
-		return(msh_switchcwd(env_list));
-	if (/*!cmd[2] &&*/chdir(cmd[1]) == 0) //comment pour gestion switch;
+	if ((!cmd[1] || cmd[1][0] == '~') && !cmd[2])
+		return (msh_gohome(env_list, newpath));
+	if (ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
+		return (msh_switchcwd(env_list));
+	if (!cmd[2] && chdir(cmd[1]) == 0)
 	{
 		if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
 		{
@@ -39,23 +39,29 @@ int	msh_chdir(char **cmd, t_env **env_list)
 		return (msh_error("chdir", cmd[1]));
 }
 
-int	msh_gohome(t_env **env_list)
+int	msh_gohome(t_env **env_list, char *newpath)
 {
 	char *home;
 
-	home = ft_strdup(msh_returnval("HOME", env_list));
+	home = msh_returnval("HOME", env_list);
 	if (home)
 	{
 		if (access(home, X_OK) == -1)
 			return (msh_error("perm", home));
 		if (chdir(home) == 0)
 		{
-			msh_setenv("OLDPWD", ft_strdup(msh_returnval("PWD", env_list)), env_list);
-			msh_setenv("PWD", home, env_list);
-			return (1);
+			if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
+			{
+				msh_setenv("OLDPWD", msh_returnval("PWD", env_list), env_list);
+				msh_setenv("PWD", home, env_list);
+				return (1);
+			}
+			return (msh_error("getcwd", "msh_chdir line :59"));
 		}
+		else
+			return (msh_error("chdir", home));
 	}
-	return(msh_error("home", NULL));
+	return (msh_error("home", NULL));
 }
 
 int	msh_switchcwd(t_env **env_list)
@@ -66,8 +72,8 @@ int	msh_switchcwd(t_env **env_list)
 	if ((newpath = msh_returnval("PWD", env_list)) == NULL)
 		return (msh_error("chdir", "cd"));
 	if (access(newpath, X_OK) == -1)
-		return(msh_error("perm", newpath));
+		return (msh_error("perm", newpath));
 	if (chdir(newpath) != 0)
-		return(msh_error("chdir", newpath));
+		return (msh_error("chdir", newpath));
 	return (1);
 }
