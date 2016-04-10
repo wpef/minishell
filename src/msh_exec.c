@@ -6,13 +6,13 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:18:28 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 17:22:11 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/10 22:13:45 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_exec(char **cmd, t_env **env_list) //if bin direct
+int		msh_exec(char **cmd, t_env **env_list)
 {
 	char	**paths;
 	char	*path;
