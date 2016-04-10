@@ -1,0 +1,6 @@
+unsetenv HOME; cd
+env - i ./a.out; unsetenv flek;
+unsetenv HOME; cd
+env - i ./a.out; unsetenv flek; cd w
+cd 
+env - i ./a.out; unsetenv flek;
