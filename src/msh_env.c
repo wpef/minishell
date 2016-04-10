@@ -137,6 +137,8 @@ int	msh_unsetenv(char *vari, t_env **env_list)
 	if (!vari)
 		return (msh_error("few", "unsetenv"));
 	curs = *env_list;
+	if (curs == NULL)
+		return (0);
 	if (vari && ft_strcmp(vari, curs->var) == 0)
 	{
 		*env_list = curs->next;

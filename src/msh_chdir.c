@@ -21,7 +21,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	newpath = NULL;
 	if (msh_returnval("PWD", env_list) == NULL)
 		msh_getpwd(env_list);
-	if ((!cmd[1] || cmd[1][0] == '~') && !cmd[2])
+	if (!cmd[1] || ((cmd[1][0] == '~') && !cmd[2]))
 		return (msh_gohome(newpath, env_list));
 	if (ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
 		return (msh_switchcwd(env_list));
