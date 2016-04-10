@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/06 21:48:57 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/10 22:10:04 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**msh_makeenvtab(t_env **env_list)
 		i++;
 		curs = curs->next;
 	}
-	tab = malloc(sizeof(char*) * i);
+	tab = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	curs = *env_list;
 	while (curs != NULL)
