@@ -64,8 +64,6 @@ int	msh_gohome(char *newpath, t_env **env_list)
 	home = msh_returnval("HOME", env_list);
 	if (home)
 	{
-		if (access(home, X_OK) == -1)
-			return (msh_error("perm", home));
 		if (chdir(home) == 0)
 		{
 			if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
@@ -77,7 +75,7 @@ int	msh_gohome(char *newpath, t_env **env_list)
 			return (msh_error("getcwd", "msh_chdir line :59"));
 		}
 		else
-			return (msh_error("chdir", home));
+			return (msh_error("chdir", home)); //gestion erreur permission denied / file dont exists;
 	}
 	return (msh_error("home", NULL));
 }
