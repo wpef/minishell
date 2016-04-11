@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/11 21:43:59 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 22:19:52 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	newpath = NULL;
 	if (msh_returnval("PWD", env_list) == NULL)
 		msh_getpwd(env_list);
-	if (!cmd[1] || ((cmd[1][0] == '~') && !cmd[2]))
+	if (!cmd[1])
+		return (msh_gohome(newpath, NULL, env_list));
+	if ((cmd[1][0] == '~') && !cmd[2])
 		return (msh_gohome(newpath, cmd[1], env_list));
 	if (ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
 		return (msh_switchcwd(env_list));
@@ -65,7 +67,9 @@ int	msh_gohome(char *newpath, char *cmd, t_env **env_list)
 	home = msh_returnval("HOME", env_list);
 	if (home)
 	{
-		path = cmd && cmd[1] ? ft_strjoin(home, &cmd[1]) : ft_strdup(home);
+		if (!cmd)
+			return (msh_gopath(home, env_list));
+		path = ft_strjoin(home, &cmd[1]);
 		if (chdir(path) == 0)
 		{
 			if ((newpath = getcwd(newpath, MAXPATHLEN)) != NULL)
@@ -78,11 +82,7 @@ int	msh_gohome(char *newpath, char *cmd, t_env **env_list)
 			free(path);
 			return (msh_error("getcwd", "msh_chdir line :59"));
 		}
-		else
-		{
-			free(path);
-			return (msh_error("chdir", path));
-		}
+		return (msh_error("chdir", path));
 	}
 	return (msh_error("home", NULL));
 }
