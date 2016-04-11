@@ -6,7 +6,7 @@
 /*   By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/08 16:29:03 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/10 21:29:21 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 19:54:36 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	msh_readline(t_env **env_list)
 	{
 		if (line[0])
 		{
-			cmd = msh_splitargs(line);
-			msh_getcmd(cmd, env_list);
+			if ((cmd = msh_splitargs(line)) != NULL)
+				msh_getcmd(cmd, env_list);
 			free(line);
 		}
 		PROMPT;

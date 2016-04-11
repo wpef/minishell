@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 12:13:34 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 17:06:21 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 19:52:55 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char		**msh_splitargs(char const *s)
 
 	i = 0;
 	words = ft_wordscount(s);
-	if ((tab = msh_maketab(words)) == NULL)
+	if (words == 0 || (tab = msh_maketab(words)) == NULL)
 		return (NULL);
 	strt = 0;
 	while (i < words)
