@@ -6,15 +6,15 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 18:24:21 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 20:43:18 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "libft.h"
-# include <stdio.h>
 # include <sys/param.h>
+# include <sys/stat.h>
 # define PROMPT ft_putstr("$> ")
 
 typedef struct	s_env {
@@ -75,6 +75,7 @@ char	**msh_makeenvtab(t_env	**env_list);
 void	msh_switchvar(char *var1, char *var2, t_env **env_list);
 t_env	*msh_envcpy(t_env **env_list);
 int		msh_error(char *index, char *prompt);
+void	msh_cderror(char *path);
 void	msh_usage(int i);
 
 /*

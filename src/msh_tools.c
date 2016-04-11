@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/10 22:10:04 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 20:47:12 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ int	msh_error(char *index, char *prompt)
 	if (ft_strcmp(index, "home") == 0)
 		ft_putendl("cd: Can't change to home directory.");
 	else if (ft_strcmp(index, "chdir") == 0)
-		ft_sdebug("%: No such file or directory", prompt);
-	else if (ft_strcmp(index, "perm") == 0)
-		ft_sdebug("cd: permission denied: %", prompt);
+		msh_cderror(prompt);
 	else if (ft_strcmp(index, "argument needed") == 0)
 	{
 		ft_putendl("env: option requires an argument -- u ");
@@ -123,6 +121,25 @@ int	msh_error(char *index, char *prompt)
 	else
 		ft_sdebug("+++++ ANORMAL ERROR AT : % ++++++", prompt);
 	return(-1);
+}
+
+void	msh_cderror(char *path)
+{
+	struct stat	s;
+	int	i;
+
+	ft_putendl(path);
+	i = stat(path, &s);
+	if (i == -1)
+		ft_sdebug("cd: No such file or directory: %", path);
+	else
+	{
+		if (!S_ISDIR(s.st_mode))
+			ft_sdebug("cd: not a directory: %", path);
+		else if (access(path, X_OK) == -1)
+			ft_sdebug("cd: permission denied: %", path);
+	}
+
 }
 
 void	msh_usage(int i)

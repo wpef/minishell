@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/06 22:15:34 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 21:00:14 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	msh_setenv(char *var, char *val, t_env **env_list)
 		if (ft_strcmp(var, curs->var) == 0)
 		{
 			free(curs->val);
-			curs->val = (val ? val : NULL);
+			curs->val = (val ? ft_strdup(val) : NULL);
 			return (1);
 		}
 		curs = curs->next;

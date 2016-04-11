@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/09 18:26:27 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/11 21:00:08 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	msh_chdir(char **cmd, t_env **env_list)
 	if (!cmd[2] && chdir(cmd[1]) == 0)
 		return (msh_gopath(newpath, env_list));
 	else if (cmd[2])
-		return (msh_error("many", cmd[1]));
+		return (msh_error("many", cmd[0]));
 	else
 		return (msh_error("chdir", cmd[1]));
 }
