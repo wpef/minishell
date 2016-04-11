@@ -1,1 +1,0 @@
-env - i ./a.out; unsetenv flek;
