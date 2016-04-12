@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/11 22:19:57 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/12 21:04:25 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 			curs = curs->next;
 	}
 	ptr = malloc(sizeof(t_env));
-	ptr->var = var;
-	ptr->val = val;
+	ptr->var = ft_strdup(var);
+	ptr->val = ft_strdup(val);
 	ptr->next = NULL;
 	if (*env_list == NULL)
 	{
@@ -150,7 +150,8 @@ int	msh_unsetenv(char *vari, t_env **env_list)
 	{
 		if (ft_strcmp(vari, curs->next->var) == 0)
 		{
-			free(curs->next->val);
+			if (curs->next->val)
+				free(curs->next->val);
 			free(curs->next->var);
 			curs->next = curs->next->next;
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/11 22:19:58 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/12 20:48:23 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 	{
 		if (ft_strcmp(var2, curs->var) == 0)
 		{
-			free(curs->val);
+			if (curs->val)
+				free(curs->val);
 			curs->val = ft_strdup(msh_returnval(var1, env_list));
 		}
 		curs=curs->next;
@@ -94,7 +95,8 @@ void	msh_switchvar(char *var1, char *var2, t_env **env_list)
 	{
 		if (ft_strcmp(var1, curs->var) == 0)
 		{
-			free(curs->val);
+			if (curs->val)
+				free(curs->val);
 			curs->val = tmp;
 		}
 		curs = curs->next;
