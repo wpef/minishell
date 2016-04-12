@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 21:04:44 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/12 21:07:58 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	msh_getpwd(t_env **env_list)
 	pwd = NULL;
 	if ((pwd = getcwd(pwd, MAXPATHLEN)) != NULL)
 	{
-		msh_setenv(ft_strdup("PWD"), pwd, env_list);
+		msh_setenv("PWD", pwd, env_list);
 		return (1);
 	}
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 21:04:25 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/12 21:14:40 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,16 @@ int	msh_env(char **cmd, t_env *env_list)
 			return (msh_error("invalid argument", cmd[i]));
 		var = ft_strsplit(cmd[i], '=');
 		msh_setenv(var[0], var[1], &newenv_list);
+		free(var);
 		i++;
 	}
 	if (cmd[i] && cmd[i][0] != '\0')
 	{
-	//	free cmd -> cmd[i];
+		while (j < i)
+		{
+			free(cmd[j]);
+			j++;
+		}
 		cmd = &cmd[i];
 		msh_getcmd(cmd, &newenv_list);
 	}
