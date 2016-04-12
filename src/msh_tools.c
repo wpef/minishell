@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 20:48:23 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/12 21:22:03 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	msh_cderror(char *path)
 	struct stat	s;
 	int	i;
 
-	ft_putendl(path);
 	i = stat(path, &s);
 	if (i == -1)
 		ft_sdebug("cd: No such file or directory: %", path);
