@@ -83,9 +83,13 @@ int	msh_switchcwd(t_env **env_list)
 {
 	char	*newpath;
 	
+	msh_getpwd(env_list);
 	msh_switchvar("PWD", "OLDPWD", env_list);
 	if ((newpath = msh_returnval("PWD", env_list)) == NULL)
+	{
+		msh_getpwd(env_list);
 		return (msh_error("chdir", ""));
+	}
 	if (access(newpath, X_OK) == -1)
 		return (msh_error("perm", newpath));
 	if (chdir(newpath) != 0)
