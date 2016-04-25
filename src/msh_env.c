@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/25 18:23:18 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:26:46 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,29 +75,6 @@ int	msh_printenv(t_env **env_list)
 	return (1);
 }
 
-int	msh_setenv(char *var, char *val, t_env **env_list)
-{
-	t_env	*curs;
-	int		i;
-
-	i = 0;
-	if (!var)
-		return (msh_printenv(env_list));
-	curs = *env_list;
-	while (curs != NULL)
-	{
-		if (ft_strcmp(var, curs->var) == 0)
-		{
-			if (curs->val)
-				free(curs->val);
-			curs->val = (val ? ft_strdup(val) : NULL);
-			return (1);
-		}
-		curs = curs->next;
-	}
-	return (msh_newenv(var, val, env_list));
-}
-
 int	msh_newenv(char *var, char *val, t_env **env_list)
 {
 	t_env	*curs;
@@ -120,47 +97,4 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 	}
 	curs->next = ptr;
 	return (1);
-}
-int	msh_parseunset(char **cmd, t_env **env_list)
-{
-	int	i;
-
-	i = 1;
-	if (cmd[i] == NULL)
-		return (msh_error("few", "unsetenv"));
-	while (cmd[i] != NULL && cmd[i][0] != '\0')
-	{
-		msh_unsetenv(cmd[i], env_list);
-		i++;
-	}
-	return (0);
-}
-
-int	msh_unsetenv(char *vari, t_env **env_list)
-{
-	t_env *curs;
-
-	if (!vari)
-		return (msh_error("few", "unsetenv"));
-	if ((curs = *env_list) == NULL)
-		return (0);
-	if (vari && ft_strcmp(vari, curs->var) == 0)
-	{
-		*env_list = curs->next;
-		free(curs);
-		return (1);
-	}
-	while (vari && curs->next != NULL)
-	{
-		if (ft_strcmp(vari, curs->next->var) == 0)
-		{
-			if (curs->next->val)
-				free(curs->next->val);
-			free(curs->next->var);
-			curs->next = curs->next->next;
-			return (1);
-		}
-		curs = curs->next;
-	}
-	return (0);
 }
