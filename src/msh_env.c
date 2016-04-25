@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/25 20:01:32 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 20:37:50 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ int	msh_env(char **cmd, t_env *env_list)
 	return (0);
 }
 
-int		msh_envflags(char **cmd, t_env **newenv_list)
+int	msh_envflags(char **cmd, t_env **newenv_list)
 {
 	int		i;
-	char	**var;
 
 	i = 1;
 	while (cmd[i] && cmd[i][0] == '-')
@@ -49,23 +48,31 @@ int		msh_envflags(char **cmd, t_env **newenv_list)
 		else if (ft_strcmp(cmd[i], "-u") == 0)
 		{
 			i++;
-			if (cmd[i])
-				msh_unsetenv(cmd[i], newenv_list);
-			else
+			if (!cmd[i])
 				return (msh_error("argument needed", cmd[i - 1]));
+			msh_unsetenv(cmd[i], newenv_list);
 		}
 		i++;
 	}
-	while (ft_charindex(cmd[i], '=') >= 0)
+	while (cmd[i] && ft_charindex(cmd[i], '=') >= 0)
 	{
-		if (ft_charindex(cmd[i], '=') == 0)
+		if (msh_envset(cmd[i], newenv_list) == -1)
 			return (msh_error("invalid argument", cmd[i]));
-		var = ft_strsplit(cmd[i], '=');
-		msh_setenv(var[0], var[1], newenv_list);
-		free(var);
 		i++;
 	}
 	return (i);
+}
+
+int	msh_envset(char *cmd, t_env **newenv_list)
+{
+	char	**var;
+
+	if (ft_charindex(cmd, '=') == 0)
+		return (msh_error("invalid argument", cmd));
+	var = ft_strsplit(cmd, '=');
+	msh_setenv(var[0], var[1], newenv_list);
+	free(var);
+	return (1);
 }
 
 int	msh_printenv(t_env **env_list)
