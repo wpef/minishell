@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 21:21:35 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:11:19 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	msh_gohome(char *newpath, char *cmd, t_env **env_list)
 int	msh_switchcwd(t_env **env_list)
 {
 	char	*newpath;
-	
+
 	msh_switchvar("PWD", "OLDPWD", env_list);
 	if ((newpath = msh_returnval("PWD", env_list)) == NULL)
 		return (msh_error("chdir", ""));

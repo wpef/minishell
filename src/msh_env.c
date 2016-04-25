@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 21:19:46 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:23:18 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	msh_env(char **cmd, t_env *env_list)
 {
-	int i;
-	char **var;
-	int j;
+	int		i;
+	char	**var;
+	int		j;
 	t_env	*newenv_list;
 
 	i = 1;
@@ -37,7 +37,7 @@ int	msh_env(char **cmd, t_env *env_list)
 		i++;
 	}
 	while (ft_charindex(cmd[i], '=') >= 0)
-	{ 
+	{
 		if (ft_charindex(cmd[i], '=') == 0)
 			return (msh_error("invalid argument", cmd[i]));
 		var = ft_strsplit(cmd[i], '=');
@@ -78,8 +78,8 @@ int	msh_printenv(t_env **env_list)
 int	msh_setenv(char *var, char *val, t_env **env_list)
 {
 	t_env	*curs;
-	int i;
-	
+	int		i;
+
 	i = 0;
 	if (!var)
 		return (msh_printenv(env_list));
@@ -102,7 +102,7 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 {
 	t_env	*curs;
 	t_env	*ptr;
-	
+
 	curs = *env_list;
 	if (curs)
 	{
@@ -118,10 +118,10 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 		*env_list = ptr;
 		return (1);
 	}
-	curs->next=ptr;
+	curs->next = ptr;
 	return (1);
 }
-int		msh_parseunset(char **cmd, t_env **env_list)
+int	msh_parseunset(char **cmd, t_env **env_list)
 {
 	int	i;
 
@@ -139,11 +139,10 @@ int		msh_parseunset(char **cmd, t_env **env_list)
 int	msh_unsetenv(char *vari, t_env **env_list)
 {
 	t_env *curs;
-	
+
 	if (!vari)
 		return (msh_error("few", "unsetenv"));
-	curs = *env_list;
-	if (curs == NULL)
+	if ((curs = *env_list) == NULL)
 		return (0);
 	if (vari && ft_strcmp(vari, curs->var) == 0)
 	{
