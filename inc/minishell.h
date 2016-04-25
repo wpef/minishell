@@ -44,6 +44,7 @@ int				msh_checknextbuilt(char **cmd, t_env **env_list);
 */
 
 int				msh_env(char **cmd, t_env *env_list);
+int				msh_envflags(char **cmd, t_env *newenv_list);
 int				msh_printenv(t_env **env_list);
 int				msh_setenv(char *var, char *val, t_env **env_list);
 int				msh_newenv(char *var, char *val, t_env **env_list);

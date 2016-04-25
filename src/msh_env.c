@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/25 18:31:27 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:49:57 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,38 @@
 int	msh_env(char **cmd, t_env *env_list)
 {
 	int		i;
-	char	**var;
 	int		j;
 	t_env	*newenv_list;
 
-	i = 1;
 	j = 0;
 	newenv_list = msh_envcpy(&env_list);
+	i = msh_envflags(cmd, newenv_list);
+	if (cmd[i] && cmd[i][0] != '\0')
+	{
+		while (j < i)
+		{
+			free(cmd[j]);
+			j++;
+		}
+		cmd = &cmd[i];
+		msh_getcmd(cmd, &newenv_list);
+	}
+	else
+		return (msh_printenv(&newenv_list));
+	return (0);
+}
+
+int		msh_envflags(char **cmd, t_env *newenv_list)
+{
+	int		i;
+	char	**var;
+
+	i = 1;
 	while (cmd[i] && cmd[i][0] == '-')
 	{
-		if (cmd[i][1] == 'i')
+		if (ft_strcmp(cmd[i], "-i") == 0)
 			newenv_list = NULL;
-		else if (cmd[i][1] == 'u')
+		else if (ft_strcmp(cmd[i], "-u") == 0)
 		{
 			i++;
 			if (cmd[i])
@@ -45,19 +65,7 @@ int	msh_env(char **cmd, t_env *env_list)
 		free(var);
 		i++;
 	}
-	if (cmd[i] && cmd[i][0] != '\0')
-	{
-		while (j < i)
-		{
-			free(cmd[j]);
-			j++;
-		}
-		cmd = &cmd[i];
-		msh_getcmd(cmd, &newenv_list);
-	}
-	else
-		return (msh_printenv(&newenv_list));
-	return (0);
+	return (i);
 }
 
 int	msh_printenv(t_env **env_list)

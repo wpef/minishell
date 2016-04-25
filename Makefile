@@ -6,7 +6,7 @@
 #    By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/14 20:22:06 by fde-monc          #+#    #+#              #
-#    Updated: 2016/04/25 18:02:23 by fde-monc         ###   ########.fr        #
+#    Updated: 2016/04/25 18:51:05 by fde-monc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ PATH_SRC = src/
 
 SRC = 	msh_chdir.c \
 		msh_env.c \
+		msh_modifenv.c \
 		msh_exec.c \
 		msh_getcmd.c \
 		msh_main.c \
