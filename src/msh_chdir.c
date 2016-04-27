@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:53:50 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/25 18:11:19 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/27 19:57:03 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	msh_switchcwd(t_env **env_list)
 
 	msh_switchvar("PWD", "OLDPWD", env_list);
 	if ((newpath = msh_returnval("PWD", env_list)) == NULL)
+	{
+		msh_getpwd(env_list);
 		return (msh_error("chdir", ""));
+	}
 	if (access(newpath, X_OK) == -1)
 		return (msh_error("perm", newpath));
 	if (chdir(newpath) != 0)
