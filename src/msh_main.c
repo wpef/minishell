@@ -6,7 +6,7 @@
 /*   By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/08 16:29:03 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/11 19:54:36 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 20:38:21 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		main(int ac, char **av, char **env)
 	env_list = NULL;
 	while (env[i] != NULL)
 	{
-		if (env[i][0] != '\0')//degueu
+		if (env[i][0] != '\0')
 			msh_makeenv(env[i], &env_list);
 		i++;
 	}

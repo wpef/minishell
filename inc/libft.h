@@ -6,7 +6,7 @@
 /*   By: Perso <Perso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:25:20 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/03/16 21:03:28 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/03/16 22:11:43 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-
 
 /*
 ** Get_Next_line

@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:38:10 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/12 21:19:46 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/04/25 20:37:50 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,13 @@
 
 int	msh_env(char **cmd, t_env *env_list)
 {
-	int i;
-	char **var;
-	int j;
+	int		i;
+	int		j;
 	t_env	*newenv_list;
 
-	i = 1;
 	j = 0;
 	newenv_list = msh_envcpy(&env_list);
-	while (cmd[i] && cmd[i][0] == '-')
-	{
-		if (cmd[i][1] == 'i')
-			newenv_list = NULL;
-		else if (cmd[i][1] == 'u')
-		{
-			i++;
-			if (cmd[i])
-				msh_unsetenv(cmd[i], &newenv_list);
-			else
-				return (msh_error("argument needed", cmd[i - 1]));
-		}
-		i++;
-	}
-	while (ft_charindex(cmd[i], '=') >= 0)
-	{ 
-		if (ft_charindex(cmd[i], '=') == 0)
-			return (msh_error("invalid argument", cmd[i]));
-		var = ft_strsplit(cmd[i], '=');
-		msh_setenv(var[0], var[1], &newenv_list);
-		free(var);
-		i++;
-	}
+	i = msh_envflags(cmd, &newenv_list);
 	if (cmd[i] && cmd[i][0] != '\0')
 	{
 		while (j < i)
@@ -58,6 +34,45 @@ int	msh_env(char **cmd, t_env *env_list)
 	else
 		return (msh_printenv(&newenv_list));
 	return (0);
+}
+
+int	msh_envflags(char **cmd, t_env **newenv_list)
+{
+	int		i;
+
+	i = 1;
+	while (cmd[i] && cmd[i][0] == '-')
+	{
+		if (ft_strcmp(cmd[i], "-i") == 0)
+			*newenv_list = NULL;
+		else if (ft_strcmp(cmd[i], "-u") == 0)
+		{
+			i++;
+			if (!cmd[i])
+				return (msh_error("argument needed", cmd[i - 1]));
+			msh_unsetenv(cmd[i], newenv_list);
+		}
+		i++;
+	}
+	while (cmd[i] && ft_charindex(cmd[i], '=') >= 0)
+	{
+		if (msh_envset(cmd[i], newenv_list) == -1)
+			return (msh_error("invalid argument", cmd[i]));
+		i++;
+	}
+	return (i);
+}
+
+int	msh_envset(char *cmd, t_env **newenv_list)
+{
+	char	**var;
+
+	if (ft_charindex(cmd, '=') == 0)
+		return (msh_error("invalid argument", cmd));
+	var = ft_strsplit(cmd, '=');
+	msh_setenv(var[0], var[1], newenv_list);
+	free(var);
+	return (1);
 }
 
 int	msh_printenv(t_env **env_list)
@@ -75,34 +90,11 @@ int	msh_printenv(t_env **env_list)
 	return (1);
 }
 
-int	msh_setenv(char *var, char *val, t_env **env_list)
-{
-	t_env	*curs;
-	int i;
-	
-	i = 0;
-	if (!var)
-		return (msh_printenv(env_list));
-	curs = *env_list;
-	while (curs != NULL)
-	{
-		if (ft_strcmp(var, curs->var) == 0)
-		{
-			if (curs->val)
-				free(curs->val);
-			curs->val = (val ? ft_strdup(val) : NULL);
-			return (1);
-		}
-		curs = curs->next;
-	}
-	return (msh_newenv(var, val, env_list));
-}
-
 int	msh_newenv(char *var, char *val, t_env **env_list)
 {
 	t_env	*curs;
 	t_env	*ptr;
-	
+
 	curs = *env_list;
 	if (curs)
 	{
@@ -118,50 +110,6 @@ int	msh_newenv(char *var, char *val, t_env **env_list)
 		*env_list = ptr;
 		return (1);
 	}
-	curs->next=ptr;
+	curs->next = ptr;
 	return (1);
-}
-int		msh_parseunset(char **cmd, t_env **env_list)
-{
-	int	i;
-
-	i = 1;
-	if (cmd[i] == NULL)
-		return (msh_error("few", "unsetenv"));
-	while (cmd[i] != NULL && cmd[i][0] != '\0')
-	{
-		msh_unsetenv(cmd[i], env_list);
-		i++;
-	}
-	return (0);
-}
-
-int	msh_unsetenv(char *vari, t_env **env_list)
-{
-	t_env *curs;
-	
-	if (!vari)
-		return (msh_error("few", "unsetenv"));
-	curs = *env_list;
-	if (curs == NULL)
-		return (0);
-	if (vari && ft_strcmp(vari, curs->var) == 0)
-	{
-		*env_list = curs->next;
-		free(curs);
-		return (1);
-	}
-	while (vari && curs->next != NULL)
-	{
-		if (ft_strcmp(vari, curs->next->var) == 0)
-		{
-			if (curs->next->val)
-				free(curs->next->val);
-			free(curs->next->var);
-			curs->next = curs->next->next;
-			return (1);
-		}
-		curs = curs->next;
-	}
-	return (0);
 }

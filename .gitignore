@@ -3,3 +3,5 @@
 **libft
 libft**
 ._*
+**/*.o
+minishell
