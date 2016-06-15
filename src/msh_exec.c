@@ -21,7 +21,7 @@ int		msh_exec(char **cmd, t_env **env_list)
 
 	i = 0;
 	env_tab = msh_makeenvtab(env_list);
-	if (cmd[0][0] == '/')
+	if (cmd[0][0] == '/' || cmd[0][0] == '.')
 		return (msh_execpath(cmd, env_tab));
 	paths = msh_getpaths(env_list);
 	while (paths[i])
