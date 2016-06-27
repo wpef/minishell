@@ -6,7 +6,7 @@
 #    By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/14 20:22:06 by fde-monc          #+#    #+#              #
-#    Updated: 2016/04/25 18:51:05 by fde-monc         ###   ########.fr        #
+#    Updated: 2016/06/27 18:59:25 by fde-monc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC = 	msh_chdir.c \
 		msh_getcmd.c \
 		msh_main.c \
 		msh_splitargs.c \
-		msh_tools.c
+		msh_tools.c \
+		msh_echo.c
 
 SRC_FILE = $(addprefix $(PATH_SRC), $(SRC));
 
