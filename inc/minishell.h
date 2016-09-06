@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/06/27 19:10:13 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/09/06 13:16:12 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,15 @@ int				msh_exec(char **cmd, t_env **env_list);
 int				msh_execbin(char *binpath, char **flags, char **env);
 int				msh_execpath(char **cmd, char **env_tab);
 char			**msh_getpaths(t_env **env_list);
+
+
+/*
+** msh_echo
+*/
+
+int				msh_echo(char **cmd, t_env **env_list);
+char			*echo_makeline(char **cmd);
+char			*echo_getstring(char *line);
+int				echo_hasquotes(char **cmd);
 
 #endif
