@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 02:36:09 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/04/25 18:24:07 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/09/06 17:18:19 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int		msh_error(char *index, char *prompt)
 		ft_sdebug("%: Too few arguments.", prompt);
 	else if (ft_strcmp(index, "many") == 0)
 		ft_sdebug("%: Too many arguments.", prompt);
+	else if (ft_strcmp(index, "quote") == 0)
+		ft_sdebug("%: Unmatched quote or simple quote", prompt);
 	else
 		ft_sdebug("+++++ ANORMAL ERROR AT : % ++++++", prompt);
 	return (-1);

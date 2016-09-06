@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:03:53 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/09/06 12:34:21 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/09/06 17:12:22 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		msh_checknextbuilt(char **cmd, t_env **env_list)
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 	{
 		msh_echo(cmd, env_list);
-		return(0);
+		return (0);
 	}
 	return (-1);
 }
