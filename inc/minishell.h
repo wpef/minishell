@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/09/06 17:12:03 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/09/06 17:50:02 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ void			msh_switchvar(char *var1, char *var2, t_env **env_list);
 t_env			*msh_envcpy(t_env **env_list);
 int				msh_error(char *index, char *prompt);
 void			msh_cderror(char *path);
-void			msh_usage(int i);
-
+void			msh_erroralert(char *str, char *s);
 /*
 ** msh_exec
 */
@@ -92,6 +91,5 @@ int				msh_echo(char **cmd, t_env **env_list);
 char			*echo_makeline(char **cmd);
 int				echo_getstring(char *line);
 int				echo_hasquotes(char **cmd);
-int				echo_closequote(char *lin, int strt);
 int				echo_checkline(char *line);
 #endif
