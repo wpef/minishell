@@ -6,7 +6,7 @@
 /*   By: fde-monc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 16:05:18 by fde-monc          #+#    #+#             */
-/*   Updated: 2016/09/06 13:16:12 by fde-monc         ###   ########.fr       */
+/*   Updated: 2016/09/06 17:07:33 by fde-monc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ char			**msh_getpaths(t_env **env_list);
 
 int				msh_echo(char **cmd, t_env **env_list);
 char			*echo_makeline(char **cmd);
-char			*echo_getstring(char *line);
+int				echo_getstring(char *line);
 int				echo_hasquotes(char **cmd);
-
+int				echo_closequote(char *lin, int strt);
+int				echo_checkline(char *line);
 #endif

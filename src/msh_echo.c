@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   msh_echo.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fde-monc <fde-monc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/09/06 17:10:23 by fde-monc          #+#    #+#             */
+/*   Updated: 2016/09/06 17:10:40 by fde-monc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	msh_echo(char **cmd, t_env **env_list)
@@ -12,7 +24,13 @@ int	msh_echo(char **cmd, t_env **env_list)
 		return (1);
 	}
 	line = echo_makeline(cmd);
+	if (echo_checkline(line) != 1)
+	{
+		ft_putendl("ERROR"); //to change
+		return (-1);
+	}
 	echo_getstring(line);
+	ft_putchar('\n');
 	return (0);
 }
 
@@ -36,34 +54,72 @@ char *echo_makeline(char **cmd) //CHECKED OK
 }
 
 
-char	*echo_getstring(char *line)
+int	echo_getstring(char *line)
 {
-	int	dq;
-	int	sq;
+	char	c;
+	int		i;
 
-	dq = 0;
-	sq = 0;
-	if ((dq = ft_charindex('"', line)) != -1)
-		echo_closequote(line, dq, 0);
-	if ((sq = ft_charindex(39, line)) != -1)
-		echo_closequote(line, sq, 1);
-	return (NULL);
+	i = 0;
+	while (line[i])
+	{
+		while (line[i] && line[i] != '"' && line[i] != 39)
+			ft_putchar(line[i++]);
+		if ((c = line[i]) == '\0')
+			return (1);
+		i++;
+		while (line[i] && line[i] != c)
+			ft_putchar(line[i++]);
+		if (line[i] == '\0')
+			return (1);
+		i++;
+	}
+	return (1);
+
 }
 
-int	echo_hasquotes(char **cmd)
+int	echo_closequote(char *line, int strt)
+{
+	char	c;
+	int		i;
+	int		end;
+
+	i = strt;
+	c = line[strt];
+	if ((end = ft_charindex(line, c)) < 0)
+		return (-1);
+	while (line[i] && i < end + 1)
+	{
+		if (line[i] != c)
+			ft_putchar(line[i]);
+		i++;
+	}
+	return (1); //??
+}
+
+int	echo_checkline(char *line)
 {
 	int i;
-	//int dq;
-	//int sq;
 
-	if (cmd)
-		i = 1;
-	/*
-	while (cmd[i])
+	i = 0;
+	while (line[i])
 	{
-		if ((dq = ft_charindex(cmd[i], '"')) != -1)
-			ft_putstr(echo_getstring(cmd[i], dq));
+		if (line[i] == '"')
+		{
+			i++;
+			while (line[i] && line[i] != '"')
+				i++;
+			if (line[i] == '\0')
+				return (-1);
+		}
+		if (line[i] == 39)
+		{
+			i++;
+			while (line[i] && line[i] != 39)
+				i++;
+			if (line[i] == '\0')
+				return (-1);
+		}
+		i++;
 	}
-	*/
 	return (1);
 }
